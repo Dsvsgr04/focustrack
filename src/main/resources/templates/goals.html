@@ -136,8 +136,8 @@
         <div th:each="goal : ${goals}" class="goal-card">
             <h3 th:text="${goal.title}">Goal Title</h3>
             <p th:text="${goal.description}">Description</p>
-            <p>📁 <span th:text="${goal.category}">Category</span></p>
-            <p>📅 <span th:text="${goal.targetDate}">Date</span></p>
+            <p> <span th:text="${goal.category}">Category</span></p>
+            <p> <span th:text="${goal.targetDate}">Date</span></p>
             <span class="badge active" th:text="${goal.status}">ACTIVE</span>
             <div class="progress-bar">
                 <div class="progress-fill"
