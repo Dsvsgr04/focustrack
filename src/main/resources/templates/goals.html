@@ -130,7 +130,7 @@
 
     <!-- Goals List -->
     <div th:if="${goals.empty}" class="empty">
-        No goals yet! Create your first goal above. 🎯
+        No goals yet! Create your first goal above. 
     </div>
     <div class="goal-grid" th:unless="${goals.empty}">
         <div th:each="goal : ${goals}" class="goal-card">
