@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FocusTrack - Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; }
+        .navbar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        .navbar h1 { font-size: 24px; }
+        .navbar a { color: white; text-decoration: none; margin-left: 20px; }
+        .container { padding: 30px; }
+        .welcome {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .welcome h2 { color: #333; font-size: 24px; }
+        .welcome p { color: #888; margin-top: 5px; }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .label {
+            color: #888;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        .sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .item {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #f8f9ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-title { color: #333; font-weight: 500; }
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .badge-active { background: #e0ffe0; color: #060; }
+        .badge-pending { background: #fff3e0; color: #e65100; }
+        .empty { color: #aaa; text-align: center; padding: 20px; }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <h1> FocusTrack</h1>
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/goals">Goals</a>
+        <a href="/tasks">Tasks</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+<div class="container">
+    <div class="welcome">
+        <h2>👋 Welcome back, <span th:text="${user.name}">User</span>!</h2>
+        <p>Here is your productivity summary for today.</p>
+    </div>
+    <div class="stats">
+        <div class="stat-card">
+            <div class="number" th:text="${goals.size()}">0</div>
+            <div class="label">Total Goals</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" th:text="${tasks.size()}">0</div>
+            <div class="label">Total Tasks</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" th:text="${pendingTasks.size()}">0</div>
+            <div class="label">Pending Tasks</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" th:text="${completedTasks.size()}">0</div>
+            <div class="label">Completed Tasks</div>
+        </div>
+    </div>
+    <div class="sections">
+        <div class="section">
+            <h3>🎯 Recent Goals</h3>
+            <div th:if="${goals.empty}" class="empty">
+                No goals yet. <a href="/goals">Create one!</a>
+            </div>
+            <div th:each="goal : ${goals}" class="item">
+                <span class="item-title" th:text="${goal.title}">Goal</span>
+                <span class="badge badge-active" th:text="${goal.status}">ACTIVE</span>
+            </div>
+            <a href="/goals" class="btn">View All Goals</a>
+        </div>
+        <div class="section">
+            <h3>📝 Recent Tasks</h3>
+            <div th:if="${tasks.empty}" class="empty">
+                No tasks yet. <a href="/tasks">Create one!</a>
+            </div>
+            <div th:each="task : ${tasks}" class="item">
+                <span class="item-title" th:text="${task.title}">Task</span>
+                <span class="badge badge-pending" th:text="${task.status}">PENDING</span>
+            </div>
+            <a href="/tasks" class="btn">View All Tasks</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
