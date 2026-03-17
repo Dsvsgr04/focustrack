@@ -21,6 +21,10 @@ public class GoalService {
         return goalRepository.findByUser(user);
     }
 
+    public List<Goal> getUserGoalsByStatus(User user, String status) {
+        return goalRepository.findByUserAndStatus(user, status);
+    }
+
     public Goal updateGoal(Goal goal) {
         return goalRepository.save(goal);
     }
