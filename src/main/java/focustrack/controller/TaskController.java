@@ -26,32 +26,48 @@ public class TaskController {
 
     @GetMapping
     public String tasks(Model model, Principal principal) {
-        User user = userService.findByEmail(principal.getName());
-        model.addAttribute("tasks", taskService.getUserTasks(user));
-        model.addAttribute("goals", goalService.getUserGoals(user));
-        model.addAttribute("newTask", new Task());
-        return "tasks";
+        try {
+            User user = userService.findByEmail(principal.getName());
+            model.addAttribute("tasks", taskService.getUserTasks(user));
+            model.addAttribute("goals", goalService.getUserGoals(user));
+            model.addAttribute("newTask", new Task());
+            return "tasks";
+        } catch (Exception e) {
+            return "redirect:/dashboard";
+        }
     }
 
     @PostMapping("/create")
     public String createTask(@ModelAttribute Task task, Principal principal) {
-        User user = userService.findByEmail(principal.getName());
-        task.setUser(user);
-        taskService.createTask(task);
+        try {
+            User user = userService.findByEmail(principal.getName());
+            task.setUser(user);
+            taskService.createTask(task);
+        } catch (Exception e) {
+            return "redirect:/tasks";
+        }
         return "redirect:/tasks";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
+        try {
+            taskService.deleteTask(id);
+        } catch (Exception e) {
+            return "redirect:/tasks";
+        }
         return "redirect:/tasks";
     }
 
     @GetMapping("/complete/{id}")
     public String completeTask(@PathVariable Long id) {
-        Task task = taskService.getTaskById(id);
-        task.setStatus("COMPLETED");
-        taskService.updateTask(task);
+        try {
+            Task task = taskService.getTaskById(id);
+            task.setStatus("COMPLETED");
+            taskService.updateTask(task);
+        } catch (Exception e) {
+            return "redirect:/tasks";
+        }
         return "redirect:/tasks";
     }
 }
