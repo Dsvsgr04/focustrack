@@ -46,7 +46,7 @@
         }
         .form-row {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
             gap: 15px;
         }
         table { width: 100%; border-collapse: collapse; }
@@ -125,6 +125,8 @@
                     <option value="Personal">Personal</option>
                 </select>
                 <input type="date" th:field="*{dueDate}"/>
+                <input type="number" th:field="*{estimatedHours}"
+                       placeholder="Hours (e.g. 2)" min="1" max="24"/>
             </div>
             <button class="btn" type="submit">Create Task</button>
         </form>
@@ -140,6 +142,7 @@
                 <th>Priority</th>
                 <th>Category</th>
                 <th>Due Date</th>
+                <th>Est. Hours</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -151,6 +154,7 @@
                 </td>
                 <td th:text="${task.category}">Category</td>
                 <td th:text="${task.dueDate}">Date</td>
+                <td th:text="${task.estimatedHours != null ? task.estimatedHours + ' hrs' : '-'}">-</td>
                 <td>
                     <span class="badge" th:classappend="${task.status}"
                           th:text="${task.status}">PENDING</span>

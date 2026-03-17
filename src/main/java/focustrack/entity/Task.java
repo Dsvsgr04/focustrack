@@ -41,5 +41,8 @@ public class Task {
     private LocalDate dueDate;
 
     @Column
+    private Integer estimatedHours;
+
+    @Column
     private LocalDateTime createdAt = LocalDateTime.now();
 }
